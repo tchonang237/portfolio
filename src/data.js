@@ -104,7 +104,7 @@ export const portfolioData = {
     },
     {
       id: 5,
-      titre: "INTRODUCTIO A LA SCIENCE DES DONNEES",
+      titre: "INTRODUCTION A LA SCIENCE DES DONNEES",
       organisme: "Cisco Networking Academy",
       image: "/data.png", 
       lienVerification: "https://www.credly.com/badges/1cdcb390-e773-4830-af39-e629c0e62b6f/public_url",

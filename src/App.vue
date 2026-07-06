@@ -32,20 +32,31 @@ onMounted(() => {
     <Navbar />
 
     <header class="min-h-screen flex flex-col justify-center items-center px-6 text-center bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden pt-20">
+      <!-- Halo lumineux en arrière-plan -->
       <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
 
-      <div class="relative mb-6 group z-10">
-        <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full blur opacity-30 group-hover:opacity-60 transition duration-500"></div>
+      <!-- CONTENEUR GLOBAL DE LA PHOTO + MOTIF DE POINTS -->
+      <div class="relative mb-8 group z-10 flex items-center justify-center w-72 h-72 md:w-80 md:h-80">
+        
+        <!-- Motif de points à l'arrière-plan (Dots Matrix) -->
+        <div class="absolute -inset-4 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-20 group-hover:opacity-30 transition duration-500 rounded-2xl"></div>
+        
+        <!-- Effet de lueur diffuse au survol (Optionnel mais stylé) -->
+        <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-emerald-500/20 rounded-full blur opacity-40 group-hover:opacity-70 transition duration-500"></div>
+        
+        <!-- La Photo parfaitement ronde et grande -->
         <img 
           src="/christoph.jpeg" 
           alt="Photo de Christoph" 
-          class="relative w-50 h-32 md:w-40 md:h-50 rounded-full object-cover border-4 border-slate-900 shadow-2xl transition duration-500 group-hover:scale-105"
+          class="relative w-full h-full rounded-full object-cover border-4 border-slate-900 shadow-2xl transition duration-500 group-hover:scale-105 z-10"
         />
       </div>
 
+      <!-- Badge de bienvenue -->
       <span class="px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full text-sm text-blue-400 font-medium tracking-wide animate-pulse">
         Bienvenue sur mon portfolio
       </span>
+      
       <h1 class="text-4xl md:text-6xl font-black text-white mt-6 tracking-tight max-w-4xl">
         {{ data.explorer.nom }}
       </h1>
@@ -60,12 +71,12 @@ onMounted(() => {
         <a href="#projets" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 transition rounded-xl font-medium shadow-lg shadow-blue-500/20 active:scale-95">
           Voir mes projets
         </a>
-       <a 
-        href="/cv.jpeg" 
-        download="cv.jpeg"
-        class="px-6 py-3 bg-slate-800 hover:bg-slate-700 transition rounded-xl font-medium border border-slate-700">
-        Télécharger mon CV
-      </a>
+        <a 
+          href="/cv.jpeg" 
+          download="cv.jpeg"
+          class="px-6 py-3 bg-slate-800 hover:bg-slate-700 transition rounded-xl font-medium border border-slate-700">
+          Télécharger mon CV
+        </a>
       </div>
     </header>
 

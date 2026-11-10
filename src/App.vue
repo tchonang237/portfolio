@@ -2,6 +2,8 @@
 import { portfolioData } from './data.js'
 import { ref, onMounted } from 'vue'
 import Navbar from './components/Navbar.vue'
+import NetworkBackground from './components/NetworkBackground.vue'
+import ProjetsPolytech from './components/ProjetsPolytech.vue'
 
 const data = ref(portfolioData)
 const timelineRef = ref(null)
@@ -28,26 +30,36 @@ onMounted(() => {
 
 <template>
   <div class="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-blue-500 selection:text-white">
-    
+
     <Navbar />
 
-    <header class="min-h-screen flex flex-col justify-center items-center px-6 text-center bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden pt-20">
+    <header class="isolate min-h-screen flex flex-col justify-center items-center px-6 text-center bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden pt-20">
+      <NetworkBackground class="-z-10" node="#93c5fd" link="#3b82f6" pulse="#34d399" />
+
       <!-- Halo lumineux en arrière-plan -->
       <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>
 
-      <!-- CONTENEUR GLOBAL DE LA PHOTO + MOTIF DE POINTS -->
-      <div class="relative mb-8 group z-10 flex items-center justify-center w-72 h-72 md:w-80 md:h-80">
-        
-        <!-- Motif de points à l'arrière-plan (Dots Matrix) -->
-        <div class="absolute -inset-4 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-20 group-hover:opacity-30 transition duration-500 rounded-2xl"></div>
-        
-        <!-- Effet de lueur diffuse au survol (Optionnel mais stylé) -->
+      <!-- CONTENEUR GLOBAL DE LA PHOTO -->
+      <div class="photo-wrap relative mb-8 group z-10 flex items-center justify-center w-80 h-80 md:w-[26rem] md:h-[26rem]">
+
+        <!-- Motif de points -->
+        <div class="absolute -inset-6 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px] opacity-20 group-hover:opacity-30 transition duration-500 rounded-2xl"></div>
+
+        <!-- Halo diffus -->
         <div class="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-emerald-500/20 rounded-full blur opacity-40 group-hover:opacity-70 transition duration-500"></div>
-        
-        <!-- La Photo parfaitement ronde et grande -->
-        <img 
-          src="/christoph.jpeg" 
-          alt="Photo de Christoph" 
+
+        <!-- Anneau lumineux qui tourne -->
+        <div class="photo-ring absolute -inset-2 rounded-full"></div>
+
+        <!-- Point lumineux qui orbite sur l'anneau -->
+        <div class="photo-orbit absolute -inset-2" aria-hidden="true">
+          <span class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-emerald-400 shadow-[0_0_14px_#34d399]"></span>
+        </div>
+
+        <!-- La photo -->
+        <img
+          src="/christoph.jpeg"
+          alt="Photo de Christoph"
           class="relative w-full h-full rounded-full object-cover border-4 border-slate-900 shadow-2xl transition duration-500 group-hover:scale-105 z-10"
         />
       </div>
@@ -56,7 +68,7 @@ onMounted(() => {
       <span class="px-4 py-1.5 bg-blue-500/10 border border-blue-500/20 rounded-full text-sm text-blue-400 font-medium tracking-wide animate-pulse">
         Bienvenue sur mon portfolio
       </span>
-      
+
       <h1 class="text-4xl md:text-6xl font-black text-white mt-6 tracking-tight max-w-4xl">
         {{ data.explorer.nom }}
       </h1>
@@ -66,13 +78,13 @@ onMounted(() => {
       <p class="text-slate-400 mt-6 max-w-2xl text-base md:text-lg leading-relaxed">
         {{ data.explorer.description }}
       </p>
-      
+
       <div class="mt-10 flex gap-4 z-10">
         <a href="#projets" class="px-6 py-3 bg-blue-600 hover:bg-blue-500 transition rounded-xl font-medium shadow-lg shadow-blue-500/20 active:scale-95">
           Voir mes projets
         </a>
-        <a 
-          href="/cv.jpeg" 
+        <a
+          href="/cv.jpeg"
           download="cv.jpeg"
           class="px-6 py-3 bg-slate-800 hover:bg-slate-700 transition rounded-xl font-medium border border-slate-700">
           Télécharger mon CV
@@ -97,7 +109,7 @@ onMounted(() => {
         </div>
       </div>
     </section>
-    <!-- SECTION PARCOURS ACADÉMIQUE (TIMELINE) -->
+
     <!-- SECTION PARCOURS ACADÉMIQUE (TIMELINE ANIMÉE) -->
     <section id="parcours" class="py-24 px-6 max-w-6xl mx-auto border-t border-slate-900 scroll-mt-20">
       <div class="text-center mb-16">
@@ -108,20 +120,20 @@ onMounted(() => {
       <!-- Conteneur de la Timeline lié à la Ref -->
       <div ref="timelineRef" class="timeline-container relative wrap overflow-hidden p-10 h-full">
         <!-- Ligne verticale centrale -->
-        <div class="timeline-line border-2-2 absolute border-opacity-20 border-blue-500 h-full border left-1/2 hidden md:block opacity-0 transition-opacity duration-1000"></div>
+        <div class="timeline-line absolute border-opacity-20 border-blue-500 h-full border left-1/2 hidden md:block opacity-0 transition-opacity duration-1000"></div>
         <!-- Ligne verticale latérale pour mobile -->
-        <div class="timeline-line border-2-2 absolute border-opacity-20 border-blue-500 h-full border left-6 md:hidden opacity-0 transition-opacity duration-1000"></div>
+        <div class="timeline-line absolute border-opacity-20 border-blue-500 h-full border left-6 md:hidden opacity-0 transition-opacity duration-1000"></div>
 
-        <div 
-          v-for="(item, index) in data.parcours" 
-          :key="item.id" 
-          class="timeline-item mb-12 flex justify-between items-center w-full opacity-0 translate-y-8 transition-all duration-700 ease-out" 
+        <div
+          v-for="(item, index) in data.parcours"
+          :key="item.id"
+          class="timeline-item mb-12 flex justify-between items-center w-full opacity-0 translate-y-8 transition-all duration-700 ease-out"
           :class="index % 2 === 0 ? 'md:flex-row-reverse' : ''"
           :style="{ transitionDelay: `${(index + 1) * 300}ms` }"
         >
           <!-- Espace vide pour équilibrer la grille sur PC -->
           <div class="order-1 w-5/12 hidden md:block"></div>
-          
+
           <!-- L'icône sur la ligne de temps -->
           <div class="z-20 flex items-center order-1 bg-slate-950 border-2 border-blue-500/50 shadow-xl w-10 h-10 rounded-full justify-center absolute left-1.5 md:static md:mx-0">
             <svg v-if="item.type === 'etude'" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -132,13 +144,13 @@ onMounted(() => {
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
             </svg>
           </div>
-          
+
           <!-- La Carte de contenu -->
           <div class="order-1 bg-slate-900/40 border border-slate-800/80 rounded-2xl w-full md:w-5/12 p-6 ml-10 md:ml-0 hover:border-slate-700/80 transition duration-300 shadow-lg">
             <span class="text-xs font-bold text-blue-400 tracking-wider">{{ item.periode }}</span>
             <h3 class="text-xl font-bold text-white mt-1 mb-2 leading-tight">{{ item.diplome }}</h3>
             <h4 class="text-sm font-semibold text-purple-400 mb-1">{{ item.etablissement }}</h4>
-            
+
             <div class="flex items-center gap-1.5 text-xs text-slate-500 mb-4">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -146,13 +158,14 @@ onMounted(() => {
               </svg>
               {{ item.lieu }}
             </div>
-            
+
             <p class="text-slate-400 text-sm leading-relaxed">{{ item.description }}</p>
           </div>
 
         </div>
       </div>
     </section>
+
     <section id="certifications" class="py-24 px-6 max-w-6xl mx-auto border-t border-slate-900 scroll-mt-20">
       <div class="text-center mb-16">
         <h2 class="text-3xl font-extrabold text-white">Certifications Officielles</h2>
@@ -172,7 +185,7 @@ onMounted(() => {
             </div>
             <div>
               <a :href="certif.lienVerification" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-xs font-bold text-emerald-400 hover:text-emerald-300 transition-colors group/link">
-                Vérifier la certification 
+                Vérifier la certification
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 transition duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
@@ -191,11 +204,11 @@ onMounted(() => {
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div v-for="projet in data.projets" :key="projet.id" class="group bg-slate-900/40 rounded-2xl border border-slate-800/80 overflow-hidden hover:border-slate-700/80 hover:shadow-xl hover:shadow-blue-500/5 transition duration-300 flex flex-col h-full">
-          
+
           <div class="w-full h-48 overflow-hidden bg-slate-900 border-b border-slate-800/50">
-            <img 
-              :src="projet.image" 
-              :alt="projet.titre" 
+            <img
+              :src="projet.image"
+              :alt="projet.titre"
               class="w-full h-full object-cover transform group-hover:scale-105 transition duration-500 ease-out grayscale-[20%] group-hover:grayscale-0"
             />
           </div>
@@ -204,7 +217,7 @@ onMounted(() => {
             <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-2">{{ projet.categorie }}</span>
             <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors duration-300 mb-3">{{ projet.titre }}</h3>
             <p class="text-slate-400 text-sm leading-relaxed flex-grow">{{ projet.description }}</p>
-            
+
             <div class="mt-6 pt-4 border-t border-slate-800/60 flex flex-wrap gap-1.5">
               <span v-for="tech in projet.technologies" :key="tech" class="px-2 py-0.5 bg-slate-800/80 text-slate-400 text-xs rounded font-medium border border-slate-700/30">
                 {{ tech }}
@@ -214,22 +227,26 @@ onMounted(() => {
         </div>
       </div>
     </section>
-    <!-- 4. SECTION CONTACT -->
+
+    <!-- SECTION PROJETS POLYTECH DIJON -->
+    <ProjetsPolytech :projets="data.polytech" />
+
+    <!-- SECTION CONTACT -->
     <section id="contact" class="py-24 px-6 max-w-4xl mx-auto border-t border-slate-900 scroll-mt-20">
       <div class="text-center mb-12">
         <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Restons en contact</span>
         <h2 class="text-3xl font-extrabold text-white mt-2">Me Contacter</h2>
         <div class="h-1 w-12 bg-blue-500 mx-auto mt-4 rounded-full"></div>
         <p class="text-slate-400 mt-4 max-w-md mx-auto text-sm leading-relaxed">
-          Qu'il s'agisse d'une opportunité d'alternance, d'un projet de réseau/IoT ou simplement pour échanger, n'hésitez pas à me joindre !
+          Qu'il s'agisse d'une opportunité d'alternance, d'un projet de robotique, réseau/IoT ou simplement pour échanger, n'hésitez pas à me joindre !
         </p>
       </div>
 
       <!-- Grille des cartes de contact -->
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
-        
+
         <!-- Carte Email -->
-        <a 
+        <a
           :href="`mailto:${data.explorer.email}`"
           class="flex flex-col items-center p-6 bg-slate-900/40 rounded-2xl border border-slate-800/80 hover:border-blue-500/50 hover:bg-slate-900/80 transition duration-300 group text-center"
         >
@@ -243,7 +260,7 @@ onMounted(() => {
         </a>
 
         <!-- Carte LinkedIn -->
-        <a 
+        <a
           :href="data.explorer.linkedin"
           target="_blank"
           rel="noopener noreferrer"
@@ -260,7 +277,7 @@ onMounted(() => {
         </a>
 
         <!-- Carte GitHub -->
-        <a 
+        <a
           :href="data.explorer.github"
           target="_blank"
           rel="noopener noreferrer"
@@ -279,21 +296,21 @@ onMounted(() => {
       </div>
     </section>
 
-   <!-- 5. FOOTER (AVEC ICÔNES DE CONTACT) -->
+    <!-- FOOTER (AVEC ICÔNES DE CONTACT) -->
     <footer class="py-12 text-center border-t border-slate-900 bg-slate-950">
       <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-        
+
         <!-- Texte de Copyright -->
         <p class="text-sm text-slate-500 order-2 md:order-1">
-          © 2026 - {{ data.explorer.nom }}. Tout droit reservé.
+          © 2026 - {{ data.explorer.nom }}. Tous droits réservés.
         </p>
 
         <!-- Liens d'accès rapide avec icônes -->
         <div class="flex items-center gap-4 order-1 md:order-2">
-          
+
           <!-- Lien Mail -->
-          <a 
-            :href="`mailto:${data.explorer.email}`" 
+          <a
+            :href="`mailto:${data.explorer.email}`"
             class="p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-blue-400 hover:border-blue-500/40 transition duration-300 shadow-sm"
             title="Envoyer un email"
           >
@@ -303,23 +320,23 @@ onMounted(() => {
           </a>
 
           <!-- Lien LinkedIn -->
-          <a 
-            :href="data.explorer.linkedin" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            class="p-2.5 rounded-lg bg-slate-900 border border-slate-900 text-slate-400 hover:text-blue-400 hover:border-blue-500/40 transition duration-400 shadow-sm"
+          <a
+            :href="data.explorer.linkedin"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-blue-400 hover:border-blue-500/40 transition duration-300 shadow-sm"
             title="Profil LinkedIn"
           >
-            <svg class="h-4 w-4 fill-current" viewBox="0 0 24 24">
+            <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
               <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
             </svg>
           </a>
 
           <!-- Lien GitHub -->
-          <a 
-            :href="data.explorer.github" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+          <a
+            :href="data.explorer.github"
+            target="_blank"
+            rel="noopener noreferrer"
             class="p-2.5 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-emerald-400 hover:border-emerald-500/40 transition duration-300 shadow-sm"
             title="Dépôts GitHub"
           >
@@ -335,6 +352,7 @@ onMounted(() => {
 
   </div>
 </template>
+
 <style scoped>
 /* État animé de la ligne bleue centrale */
 .timeline-container.timeline-visible .timeline-line {
@@ -345,5 +363,40 @@ onMounted(() => {
 .timeline-container.timeline-visible .timeline-item {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Photo : entrée + flottaison */
+.photo-wrap {
+  animation:
+    photo-in 0.9s ease-out both,
+    photo-float 6s ease-in-out 1s infinite;
+}
+@keyframes photo-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes photo-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* Anneau en dégradé qui tourne */
+.photo-ring {
+  background: conic-gradient(from 0deg, transparent 0%, #3b82f6 25%, #34d399 50%, transparent 75%);
+  -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+          mask: radial-gradient(farthest-side, transparent calc(100% - 3px), #000 calc(100% - 2px));
+  animation: photo-spin 6s linear infinite;
+}
+
+/* Point qui tourne le long de l'anneau */
+.photo-orbit {
+  animation: photo-spin 8s linear infinite;
+}
+@keyframes photo-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-wrap, .photo-ring, .photo-orbit { animation: none; }
 }
 </style>

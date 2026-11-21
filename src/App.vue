@@ -2,6 +2,7 @@
 import { portfolioData } from './data.js'
 import { ref, onMounted } from 'vue'
 import Navbar from './components/Navbar.vue'
+import RobotArm from './components/RobotArm.vue'
 import NetworkBackground from './components/NetworkBackground.vue'
 import ProjetsPolytech from './components/ProjetsPolytech.vue'
 
@@ -35,6 +36,8 @@ onMounted(() => {
 
     <header class="isolate min-h-screen flex flex-col justify-center items-center px-6 text-center bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden pt-20">
       <NetworkBackground class="-z-10" node="#93c5fd" link="#3b82f6" pulse="#34d399" />
+      
+      <RobotArm class="-z-10" />
 
       <!-- Halo lumineux en arrière-plan -->
       <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-blue-500/10 rounded-full blur-3xl"></div>

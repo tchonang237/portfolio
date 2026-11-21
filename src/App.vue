@@ -3,6 +3,7 @@ import { portfolioData } from './data.js'
 import { ref, onMounted } from 'vue'
 import Navbar from './components/Navbar.vue'
 import RobotArm from './components/RobotArm.vue'
+import RobotPhoto from './components/RobotPhoto.vue'
 import NetworkBackground from './components/NetworkBackground.vue'
 import ProjetsPolytech from './components/ProjetsPolytech.vue'
 
@@ -36,7 +37,8 @@ onMounted(() => {
 
     <header class="isolate min-h-screen flex flex-col justify-center items-center px-6 text-center bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden pt-20">
       <NetworkBackground class="-z-10" node="#93c5fd" link="#3b82f6" pulse="#34d399" />
-      
+
+      <!-- Bras robotisés qui suivent la souris -->
       <RobotArm class="-z-10" />
 
       <!-- Halo lumineux en arrière-plan -->
@@ -199,13 +201,17 @@ onMounted(() => {
       </div>
     </section>
 
-    <section id="projets" class="py-24 px-6 max-w-6xl mx-auto border-t border-slate-900 scroll-mt-20">
-      <div class="text-center mb-16">
+    <section id="projets" class="relative overflow-hidden py-24 px-6 max-w-6xl mx-auto border-t border-slate-900 scroll-mt-20">
+
+      <!-- Robot FANUC animé en arrière-plan -->
+      <RobotPhoto class="hidden md:block" position="center" :height="620" :opacity="0.22" />
+
+      <div class="relative z-10 text-center mb-16">
         <h2 class="text-3xl font-extrabold text-white">Projets Récents</h2>
         <div class="h-1 w-12 bg-emerald-500 mx-auto mt-4 rounded-full"></div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="relative z-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div v-for="projet in data.projets" :key="projet.id" class="group bg-slate-900/40 rounded-2xl border border-slate-800/80 overflow-hidden hover:border-slate-700/80 hover:shadow-xl hover:shadow-blue-500/5 transition duration-300 flex flex-col h-full">
 
           <div class="w-full h-48 overflow-hidden bg-slate-900 border-b border-slate-800/50">
